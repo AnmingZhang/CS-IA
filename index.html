@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <title>Homepage</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    
+<body>
+    <div id="homepage-container">
+        <h1><br></br> Play Games For Free!</h1>
+
+        <div class="game-links">
+            <a href="minesweeper.html" class="game-button">
+                <img src="assets/minesweeper.png" alt="Minesweeper" class="game-image">
+                <span>Play Minesweeper</span>
+            </a>
+            <a href="2048.html" class="game-button">
+                <img src="assets/2048.png" alt="2048" class="game-image">
+                <span>Play 2048</span>
+            </a>
+            <a href="clicker.html" class="game-button">
+                <img src="assets/clicker.png" alt="Clicker" class="game-image">
+                <span>Play Egg Clicker</span>
+            </a>
+        </div>
+        <div id="homepage">
+            <h2>Game Scores</h2>
+    
+            <h3>2048 Scores</h3>
+            <p id="2048-scores">No scores yet</p>
+    
+            <h3>Minesweeper Scores</h3>
+            <p id="minesweeper-scores">No scores yet</p>
+    
+            <h3>Clicker Scores</h3>
+            <p id="clicker-scores">No scores yet</p>
+
+            <button onclick="clearScores()">Clear Scores</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

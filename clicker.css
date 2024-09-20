@@ -1,0 +1,120 @@
+body {
+    font-family: 'Times New Roman', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #faf8ef;
+}
+
+#game-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+    width: 80%;
+}
+
+#assets-section, #upgrades-section {
+    text-align: center;
+    height: 650px;
+    width: 300px;
+    outline-width: 10px;
+    outline-style: double;
+    background-color: #add8e6;
+    overflow-y: scroll;
+    position: relative;
+    overflow: visible;
+}
+
+#center-section {
+    text-align: center;
+    height: 650px;
+    width: 500px;
+    padding: 50px;
+    outline-width: 10px;
+    outline-style: double;
+    background-color: beige;
+}
+
+.buy-asset, .buy-upgrade{
+    display: flex; 
+    text-align: left;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 300px; 
+    padding: 15px;
+    font-size: 20px; 
+    cursor: pointer;
+    background-color: #add8e6; 
+    color: white;
+    outline-width: 2px;
+    transition: background-color 0.3s, transform 0.1s;
+    position: relative;
+}
+
+.buy-asset.unaffordable, .buy-upgrade.unaffordable {
+    background-color: #4d7ea8; 
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 160px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: fixed;
+    z-index: 100;
+    bottom: 3%;
+    left: 130%;
+    margin-left: -80px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.buy-asset:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.buy-asset:hover, .buy-upgrade:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); 
+}
+
+.asset-image {
+    width: 40px;
+    height: 40px;
+    display: block;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+#egg-counter, #passive-egg-rate, #click-egg-rate {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+#egg-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+#egg-image {
+    width: 300px;
+    height: 350px;
+    transition: transform 0.2s; 
+}
+
+#egg-button:active #egg-image {
+    transform: scale(0.9);
+}
+

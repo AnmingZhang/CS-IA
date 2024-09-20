@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="minesweeper.css">
+</head>
+<body>
+    <div id="game-container"></div>
+    <div id="game-over-screen" class="hidden">
+        <div id="game-over-message"></div>
+        <button id="play-again-button">Play Again</button>
+    </div>
+    <div id="control-panel">
+        <div id="timer">⏰: 0:00</div>
+        <div id="flags-remaining">Flags Remaining: 8</div>
+        <div id="difficulty-buttons">
+            <button id="easy-button">Easy</button>
+            <button id="medium-button">Medium</button>
+            <button id="hard-button">Hard</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
+    <script src="minesweeper.js"></script>
+</body>
+</html>

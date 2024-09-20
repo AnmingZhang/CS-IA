@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egg Clicker</title>
+    <link rel="stylesheet" href="clicker.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Assets Section on the Left -->
+        <div id="assets-section">
+            <button class="buy-asset" data-asset="chicken" data-cost="20">
+                <img src="assets/chicken.png" alt="Chicken" class="asset-image">
+                <span>&nbsp;Chicken - 20</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+            <button class="buy-asset" data-asset="farm" data-cost="100">
+                <img src="assets/farm.png" alt="Farm" class="asset-image">
+                <span>&nbsp;Farm - 100</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+            <button class="buy-asset" data-asset="factory" data-cost="1200">
+                <img src="assets/factory.png" alt="Factory" class="asset-image">
+                <span>&nbsp;Factory - 1.20K</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+            <button class="buy-asset" data-asset="laboratory" data-cost="20000">
+                <img src="assets/laboratory.png" alt="Laboratory" class="asset-image">
+                <span>&nbsp;Laboratory - 20K</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+            <button class="buy-asset" data-asset="shrine" data-cost="500000">
+                <img src="assets/shrine.png" alt="Shrine" class="asset-image">
+                <span>&nbsp;Shrine - 500K</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+            <button class="buy-asset" data-asset="golden_goose" data-cost="100000000">
+                <img src="assets/golden_goose.png" alt="Golden Goose" class="asset-image">
+                <span>&nbsp;Golden Goose - 10M</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+            <button class="buy-asset" data-asset="god" data-cost="50000000000">
+                <img src="assets/god.png" alt="God" class="asset-image">
+                <span>&nbsp;God - 5B</span>
+                <div class="tooltip">Owned: 0<br>Producing: 0 eggs/second</div>
+            </button>
+        </div>
+
+        <!-- Egg Button in the Center -->
+        <div id="center-section">
+            <h1>Egg Clicker</h1>
+            <div id="egg-counter">Eggs: <span id="egg-count">0</span></div>
+            <div id="passive-egg-rate">Eggs per Second: <span id="eggs-per-second">0</span></div>
+            <div id="click-egg-rate">Eggs per Click: <span id="eggs-per-click">0</span></div>
+            <button id="egg-button">
+                <img src="assets/egg.png" alt="Egg" id="egg-image">
+            </button>
+        </div>
+
+        <!-- Upgrades Section on the Right -->
+        <div id="upgrades-section">
+            <!-- Upgrades will be added here through Javascript -->
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="clicker.js"></script>
+</body>
+</html>
