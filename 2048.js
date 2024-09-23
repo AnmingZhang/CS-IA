@@ -90,7 +90,7 @@ function moveDown() {
 }
 
 function checkGameStatus() {
-    if (board.flat().includes(16)) {
+    if (board.flat().includes(2048)) {
         gameOver = true;
         showGameOverScreen(true);
     }
