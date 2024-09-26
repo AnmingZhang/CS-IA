@@ -19,6 +19,7 @@ let multipliers = {
     golden_goose: 500000,
     god: 10000000
 };
+//how much each asset increases the price when more are bought
 let exponential = { 
     chicken: 1.05,
     farm: 1.1,
@@ -29,6 +30,7 @@ let exponential = {
     god: 1.35
 };
 
+//cost, multiplier, and threshold for each upgrade
 const clickUpgrades = [
     { cost: 50, multiplier: 2, legacyThreshold: 50 },
     { cost: 500, multiplier: 2, legacyThreshold: 500 },
@@ -112,7 +114,7 @@ window.onload = function() {
     checkUpgrades(); 
 };
 
-
+//Format number to make it readable
 function formatNumber(number) {
     if (number >= 1e12) {
         return (number / 1e12).toFixed(2) + "T";
@@ -127,12 +129,14 @@ function formatNumber(number) {
     }
 }
 
+//update variables when central egg is clicked
 eggButton.addEventListener("click", () => {
     eggCount += multipliers["click"]; 
     legacyEggCount += multipliers["click"];
     eggCountDisplay.textContent = formatNumber(eggCount);  
 });
 
+//passively generate eggs based on assets
 function passiveEggGeneration() {
     const eggsFromChickens = assets.chicken * multipliers.chicken;
     const eggsFromFarms = assets.farm * multipliers.farm;
@@ -141,13 +145,16 @@ function passiveEggGeneration() {
 
     eggCount += totalEggsPerSecond; 
     legacyEggCount += totalEggsPerSecond;
+    //diplay to screen
     eggCountDisplay.textContent = formatNumber(eggCount); 
     eggsPerSecondDisplay.textContent = formatNumber(totalEggsPerSecond);
     eggsPerClickDisplay.textContent = formatNumber(multipliers["click"]);
     checkUpgrades();
 }
+//update every 1000 ms (1 s)
 setInterval(passiveEggGeneration, 1000);
 
+//mark unaffordable buttons in a darker shade
 function updateButtonStates() {
     document.querySelectorAll(".buy-asset").forEach(button => {
         const cost = parseInt(button.getAttribute("data-cost"));
@@ -168,6 +175,7 @@ function updateButtonStates() {
 }
 setInterval(updateButtonStates, 100); 
 
+//create upgrade buttons
 function createUpgrades(asset, upgrades) {
     const upgradeSection = document.getElementById("upgrades-section");
 
@@ -184,6 +192,7 @@ function createUpgrades(asset, upgrades) {
         upgradeSection.appendChild(button);
     });
 }
+//display upgrades based on price
 function sortUpgradesByCost() {
     const upgradesSection = document.getElementById("upgrades-section");
     const upgrades = Array.from(document.querySelectorAll(".buy-upgrade"));
@@ -207,6 +216,7 @@ createUpgrades("golden_goose", golden_gooseUpgrades);
 createUpgrades("god", godUpgrades);
 sortUpgradesByCost();
 
+//display upgrades when threshold is reached and hide when purchased or threshold not reached
 function checkUpgrades() {
     document.querySelectorAll(".buy-upgrade").forEach(upgrade => {
         const legacyThreshold = parseInt(upgrade.getAttribute("data-legacy-threshold"));
@@ -219,6 +229,7 @@ function checkUpgrades() {
     });
 }
 
+//create asset buttons with images
 function createAssetButton(assetName) {
     const button = document.createElement("button");
     button.classList.add("buy-asset");
@@ -238,19 +249,21 @@ function createAssetButton(assetName) {
     return button;
 }
 
-
+//calculate price based on exponential constants
 function calculatePrice(assetName) {
     const basePrice = parseInt(document.querySelector(`button[data-asset="${assetName}"]`).getAttribute("data-cost"));
     const owned = assets[assetName];
     return Math.floor(basePrice * Math.pow(exponential[assetName], owned));
 }
 
+//handle buying upgrades
 document.querySelectorAll(".buy-upgrade").forEach(upgrade => {
     upgrade.addEventListener("click", () => {
         const asset = upgrade.getAttribute("data-asset"); 
         const cost = parseInt(upgrade.getAttribute("data-cost"));
         const upgradeMultiplier = parseInt(upgrade.getAttribute("data-multiplier"));
 
+        //update variables if purchased
         if (eggCount >= cost) {
             eggCount -= cost; 
             multipliers[asset] *= upgradeMultiplier; 
@@ -260,6 +273,7 @@ document.querySelectorAll(".buy-upgrade").forEach(upgrade => {
     });
 });
 
+//update data in tooltip
 function updateTooltip(button, assetName) {
     const tooltip = button.querySelector(".tooltip");
     const owned = assets[assetName];
@@ -267,9 +281,11 @@ function updateTooltip(button, assetName) {
     tooltip.innerHTML = `Owned: ${owned}<br>Per second: ${formatNumber(production)}`;
 }
 
+//handle buying assets
 document.querySelectorAll(".buy-asset").forEach(button => {
     const assetName = button.getAttribute("data-asset");
 
+    //display tooltip when hovering over asset
     button.addEventListener("mouseenter", () => {
         updateTooltip(button, assetName);
     });
@@ -278,6 +294,7 @@ document.querySelectorAll(".buy-asset").forEach(button => {
         const asset = button.getAttribute("data-asset");
         const cost = parseInt(button.getAttribute("data-cost"));
 
+        //update variables
         if (eggCount >= cost) {
             eggCount -= cost;
             assets[asset] += 1; 
@@ -290,6 +307,7 @@ document.querySelectorAll(".buy-asset").forEach(button => {
     });
 });
 
+//update score upon exit
 window.addEventListener("beforeunload", function (event) {
     updateScore('clicker', legacyEggCount); 
     event.preventDefault();

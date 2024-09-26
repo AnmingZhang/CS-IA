@@ -18,12 +18,14 @@ let timerInterval;
 document.addEventListener("DOMContentLoaded", () => {
     startNewGameWithDifficulty("easy");
 
+    //start new game when new difficulty is chosen
     document.getElementById("easy-button").addEventListener("click", () => startNewGameWithDifficulty("easy"));
     document.getElementById("medium-button").addEventListener("click", () => startNewGameWithDifficulty("medium"));
     document.getElementById("hard-button").addEventListener("click", () => startNewGameWithDifficulty("hard"));
     document.getElementById("play-again-button").addEventListener("click", () => startNewGameWithDifficulty(difficulty));
 });
 
+//update variables according to difficulty
 function setDifficulty(newDifficulty) {
     ({size, mines, cellSize} = difficultySettings[newDifficulty]);
     flags = mines;
@@ -47,7 +49,9 @@ function startNewGameWithDifficulty(difficulty) {
     startTimer();
 }
 
+//randomly generate mines upon first click
 function generateMines(click) {
+    //create a safe zone around the first click
     const safeZone = [];
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
@@ -59,6 +63,7 @@ function generateMines(click) {
         }
     }
 
+    //randomly place mines until enough
     let minesToPlace = mines;
     while (minesToPlace > 0) {
         const r1 = Math.floor(Math.random() * size);
@@ -69,6 +74,7 @@ function generateMines(click) {
         }
     }
 
+    //update tiles around mines
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
             if (board[i][j] === -1) continue;
@@ -91,17 +97,17 @@ function createBoard(click) {
     return board;
 }
 
+//reveal all adjacent safe cells 
 function floodFill(x, y) {
     if (x < 0 || y < 0 || x >= size || y >= size || visited[x][y]) {
         return;
     }
-
     visited[x][y] = true;
-
     if (board[x][y] !== 0) {
         return;
     }
 
+    //recursively call to reveal next adjacent cells
     for (let dx = -1; dx <= 1; dx++) {
         for (let dy = -1; dy <= 1; dy++) {
             if (dx !== 0 || dy !== 0) {
@@ -111,6 +117,7 @@ function floodFill(x, y) {
     }
 }
 
+//handle left click
 function leftClick(x, y) {
     if (firstClick) {
         createBoard([x, y]); 
@@ -133,6 +140,7 @@ function leftClick(x, y) {
     }
 }
 
+//handle right click
 function rightClick(x, y) {
     if (!visited[x][y]) {
         flagged[x][y] = !flagged[x][y];
@@ -142,6 +150,7 @@ function rightClick(x, y) {
     }
 }
 
+//display the elements on the board
 function drawBoard(container) {
     container.innerHTML = "";  
 
@@ -152,6 +161,7 @@ function drawBoard(container) {
             cell.style.width = `${cellSize}px`;
             cell.style.height = `${cellSize}px`;
 
+            //mark visited cells accordingly
             if (visited[x][y]) {
                 cell.classList.add("revealed");
                 if (board[x][y] > 0) {
@@ -176,6 +186,7 @@ function drawBoard(container) {
     }
 }
 
+//reveal mines when lost
 function revealMines() {
     for (let x = 0; x < size; x++) {
         for (let y = 0; y < size; y++) {
@@ -186,6 +197,7 @@ function revealMines() {
     }
 }
 
+//reveal all safe when won
 function revealSafe() {
     for (let x = 0; x < size; x++) {
         for (let y = 0; y < size; y++) {
@@ -200,6 +212,7 @@ function revealSafe() {
     }
 }
 
+//display flags available
 function updateFlagsRemaining() {
     const flagsRemainingElement = document.getElementById("flags-remaining");
     flagsRemainingElement.textContent = `🚩: ${flags}`;
@@ -223,6 +236,7 @@ function hideGameOverScreen() {
     gameOverScreen.style.display = "none";
 }
 
+//track the amount of time game lasts
 function startTimer() {
     startTime = Date.now(); 
 
@@ -236,12 +250,14 @@ function stopTimer() {
     clearInterval(timerInterval);  
 }
 
+//format time to minutes and seconds
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${minutes}:${secondsLeft.toString().padStart(2, '0')}`; 
 }
 
+//update score to homepage
 function endGameMinesweeper(timeTaken) {
     updateScore('minesweeper', timeTaken); 
 }

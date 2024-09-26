@@ -1,15 +1,15 @@
-// Function to update the score in sessionStorage
+//update the score in sessionStorage
 function updateScore(game, score) {
     let scores = JSON.parse(sessionStorage.getItem('scores')) || {};
 
     if (!scores[game]) {
-        scores[game] = []; // Initialize the score list if it doesn't exist
+        scores[game] = [];
     }
-    scores[game].push(score); // Add the new score
-    sessionStorage.setItem('scores', JSON.stringify(scores)); // Save scores
+    scores[game].push(score); 
+    sessionStorage.setItem('scores', JSON.stringify(scores)); 
 }
 
-// Function to display scores on the homepage
+//display scores on the homepage
 function displayScores() {
     let scores = JSON.parse(sessionStorage.getItem('scores')) || {};
 
@@ -19,15 +19,15 @@ function displayScores() {
     document.getElementById('clicker-scores').textContent = scores['clicker'] ? scores['clicker'].join(', ') : 'No scores yet';
 }
 
-// Clear all scores
+//clear all scores
 function clearScores() {
-    sessionStorage.removeItem('scores'); // Clear the sessionStorage
-    displayScores(); // Refresh display
+    sessionStorage.removeItem('scores'); 
+    displayScores(); 
 }
 
-// Use `pageshow` to ensure scores are loaded even when navigating back
+//use `pageshow` to ensure scores are loaded even when navigating back
 window.addEventListener('pageshow', function(event) {
     if (event.persisted || document.readyState === 'complete') {
-        displayScores(); // Reload scores when navigating back to the homepage
+        displayScores();
     }
 });

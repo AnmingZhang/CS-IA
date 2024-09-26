@@ -7,6 +7,7 @@ let gameOver = false;
 const gridElement = document.getElementById('grid');
 const scoreElement = document.getElementById('score');
 
+//initialize variables
 function initializeBoard() {
     hideGameOverScreen();
     score = 0;
@@ -17,19 +18,24 @@ function initializeBoard() {
     updateGrid();
 }
 
+//randomly generate tiles
 function generateTile() {
+    //check for empty tiles
     let emptyCells = [];
     for (let x = 0; x < rows; x++) {
         for (let y = 0; y < cols; y++) {
             if (board[x][y] === 0) emptyCells.push({ x, y });
         }
     }
+    //generate tile at random index with a random value
     if (emptyCells.length > 0) {
         const { x, y } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        //randomly generate 2 (75%) or 4 (25%)
         board[x][y] = Math.random() < 0.75 ? 2 : 4;
     }
 }
 
+//display the numbers in the grid and the score
 function updateGrid() {
     gridElement.innerHTML = '';
     for (let x = 0; x < rows; x++) {
@@ -47,9 +53,11 @@ function updateGrid() {
     scoreElement.textContent = `Score: ${score}`;
 }
 
+//slide all elements in a row to the left and combine equal elements
 function slide(row) {
     row = row.filter(val => val);
     for (let i = 0; i < row.length - 1; i++) {
+        //combine equal elements
         if (row[i] === row[i + 1]) {
             row[i] *= 2;
             score += row[i];
@@ -61,10 +69,11 @@ function slide(row) {
     return row;
 }
 
+//rotate the board to account for all directions
 function rotateClockwise(board) {
     return board[0].map((_, index) => board.map(row => row[index]).reverse());
 }
-
+//rotate back to original orientation once shifted
 function rotateCounterClockwise(board) {
     return board[0].map((_, index) => board.map(row => row[row.length - 1 - index]));
 }
@@ -89,6 +98,7 @@ function moveDown() {
     board = rotateCounterClockwise(board);
 }
 
+//check if won or lost
 function checkGameStatus() {
     if (board.flat().includes(2048)) {
         gameOver = true;
@@ -102,6 +112,7 @@ function checkGameStatus() {
     }
 }
 
+//check for available moves
 function canMove() {
     // Check for any empty cells
     for (let x = 0; x < rows; x++) {
@@ -124,6 +135,7 @@ function canMove() {
     return false;
 }
 
+//used to prevent generation if an arrow key is pressed and no change occurs
 function compareArrays(a, b) {
     for (let x = 0; x < a.length; x++) {
         for (let y = 0; y < a[x].length; y++) {
@@ -135,6 +147,7 @@ function compareArrays(a, b) {
     return true;
 }
 
+//listen for key presses
 document.addEventListener('keydown', e => {
     if (gameOver) return;
 
@@ -160,6 +173,7 @@ document.addEventListener('keydown', e => {
         return;
     }
     updateGrid();
+    //slight delay to make it clear which tile just generated
     setTimeout(() => {
         generateTile();
         updateGrid(); 
@@ -184,13 +198,15 @@ function hideGameOverScreen() {
     gameOverScreen.style.display = "none";
 }
 
+//update score to homepage
 function endGame2048(finalScore) {
     updateScore('2048', finalScore); 
 }
 
-initializeBoard();
-
+//ask user if they are sure they want to exit
 window.addEventListener("beforeunload", function (event) {
     event.preventDefault();
     event.returnValue = ''; 
 });
+
+initializeBoard();
