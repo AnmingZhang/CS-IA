@@ -154,15 +154,19 @@ document.addEventListener('keydown', e => {
     temp = board.map(row => row.slice());
     switch (e.key) {
         case 'ArrowLeft':
+        case 'a':
             moveLeft();
             break;
         case 'ArrowRight':
+        case 'd':
             moveRight();
             break;
         case 'ArrowUp':
+        case 'w':
             moveUp();
             break;
         case 'ArrowDown':
+        case 's':
             moveDown();
             break;
         default:
