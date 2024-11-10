@@ -192,9 +192,8 @@ function showGameOverScreen(won) {
 
     gameOverMessage.textContent = won ? `You Won! Score: ${score}` : "Game Over!";
     gameOverScreen.style.display = "flex";
-    if (won) {
-        endGame2048(score);
-    }
+    
+    updateScore('2048', score)
 }
 
 function hideGameOverScreen() {
@@ -202,13 +201,9 @@ function hideGameOverScreen() {
     gameOverScreen.style.display = "none";
 }
 
-//update score to homepage
-function endGame2048(finalScore) {
-    updateScore('2048', finalScore); 
-}
-
 //ask user if they are sure they want to exit
 window.addEventListener("beforeunload", function (event) {
+    updateScore('2048', score);
     event.preventDefault();
     event.returnValue = ''; 
 });
